@@ -7,8 +7,9 @@
     "build": "tsup",
     "start": "node dist/server.js",
     "blog": "node dist/cli.js",
-    "dev": "tsx runScript.ts",
+    "dev": "nodemon",
     "dev:blog": "tsx src/cli.ts",
+    "test": "node test-runner.js",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix"
   },
