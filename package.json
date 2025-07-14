@@ -1,0 +1,30 @@
+{
+  "name": "blogforge",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/server.js",
+  "scripts": {
+    "build": "tsup",
+    "start": "node dist/server.js",
+    "blog": "node dist/cli.js",
+    "dev": "tsx runScript.ts",
+    "dev:blog": "tsx src/cli.ts",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.0.0",
+    "@types/node": "^24.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.34.1",
+    "@typescript-eslint/parser": "^8.34.1",
+    "eslint": "^9.29.0",
+    "nodemon": "^3.1.10",
+    "tsup": "^8.0.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  },
+  "repository": {
+    "url": "https://github.com/henrygad/BlogForge.git"
+  },
+  "license": "MIT"
+}
