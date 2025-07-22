@@ -2,7 +2,7 @@ import http from "http";
 import { saveBlogToFile, getBlogFromFile } from "../utils/saveBlogToDB.utils";
 import reqUrlQueries from "src/utils/reqUrlQueries";
 import proxyGenerateAiBlog from "src/utils/proxyGenerateAiBlog";
-import watchDB from "src/utils/watchDb";
+import watchDB from "../utils/watchDB";
 
 
 // Create new blog controller

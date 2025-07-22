@@ -1,54 +1,40 @@
 # 🛠️ BlogForge
 
-BlogForge is a minimalist, powerful CLI-based blog management tool built entirely with **Node.js core modules** — no frameworks, no libraries.
+**BlogForge** is a local-first content generation toolkit that includes:
 
-It generates, watches, and serves Markdown-based blog posts as a static site, making it perfect for learning and mastering the Node.js ecosystem.
-
----
-
-## 📦 Features
-
-- 🧠 Write blog posts with AI content (optional via proxy mode)
-- 🗂 Generate Markdown blogs via CLI
-- 🔄 Live file watching and auto-updates
-- 🌐 Local HTTP server with HTML rendering
-- 📡 Proxy mode to route AI generation to external API (OpenAI, Hugging Face, etc.)
-- 🧪 Built-in test runner for all phases
-- 🔧 Uses only built-in Node.js modules
-
----
-
-## 🚀 Getting Started
-
-```bash
-# Clone the repo
-git clone https://github.com/your-username/blogforge.git
-cd blogforge
-
-# Run CLI tool
-node blogforge.js create "My First Blog"
-
-# Start the dev server
-node server.js
-
-# View at
-http://localhost:3000
-```
+- A powerful command-line tool (CLI) for generating AI-powered blog content
+- A lightweight server for previewing blogs in the browser
 
 ---
 
 ## 📁 Project Structure
 
-```
-blogforge/
-├── blogs/                # Generated Markdown files
-├── server.js             # Static file server
-├── blogforge.js          # CLI interface
-├── watcher.js            # File watcher for blogs
-├── proxy.js              # Proxy mode for AI
-├── render.js             # Markdown to HTML renderer
-├── test-runner.js        # Node.js test runner
-└── README.md
+This repository contains two tools:
+
+### 1. 🖥️ `cli.ts` — Command Line Interface (Published to npm)
+
+- Installs globally via `npm`
+- Saves blogs to the user's `Downloads/BlogForge/` folder
+- Offers helpful commands like `os`, `ai`, `create`, and `list`
+- Designed for offline, local-first content generation
+- only need internet connention for generating ai blog
+
+### 2. 🌐 `server.ts` — Local Preview Server (Not on npm)
+
+- Serves generated blog posts as json 
+- Useful for local development or deploying a static blog viewer
+- Optional component you can run or host separately
+- Available on `githum`
+
+---
+
+## 🚀 CLI Installation
+
+Install BlogForge CLI globally:
+
+```bash
+npm install -g blogforge      
+yarn add -D blogforge
 ```
 
 ---
@@ -56,49 +42,66 @@ blogforge/
 ## ⚙️ CLI Usage
 
 ```bash
-node blogforge.js create "Post Title"
-node blogforge.js list
-node blogforge.js delete "Post Title"
+blogforge ai "The Rise of AI Writing" "Author" 
 ```
+
+This command generates a new blog post with:
+
+- Clean Markdown (`post.md`)
+- Metadata (`meta.json`)
+
+All saved in your local `~/Downloads/BlogForge/` directory.
+
+### 🧰 Available CLI Commands
+
+| Command                                         | Description                              |
+| ----------------------------------------------- | ---------------------------------------- |
+| `blogforge create <author> <title> <body>`      | Create a new blog with your inputs       |
+| `blogforge ai <title> <author>`                 | Create a new blog with generated ai body |
+| `blogforge edit <slug> <author> <title> <body>` | Updated existing blog                    |
+| `blogforge list`                                | List all created blogs                   |
+| `blogforge delete`                              | Delete all blogs and blogforge folder    |
+| `blogforge -help`                               | Show help menu                           |
 
 ---
 
-## 🔌 Proxy Mode (AI Blog Generation)
+## 🌐 Server Usage (Optional)
 
-Configure your `.env` or inject API key manually in `proxy.js` to allow AI-powered blog post generation via OpenAI or Hugging Face.
+The `server.ts` file is **not part of the npm package**. It lets you preview your generated blogs in the browser.
 
-```js
-node proxy.js --topic "How to learn Node.js"
-```
-
----
-
-## 🧪 Testing
+### 🔧 To Run Locally:
 
 ```bash
-node test-runner.js
+git clone https://github.com/henrygad/BlogForge.git
+yarn build
+yarn start
 ```
 
-Tests core modules: `fs`, `path`, `http`, `os`, `child_process`, etc.
+It the browser version of cli. It create and serves blog content on the web that is ideal for:
+
+- Testing how it work on browser
+- Hosting locally on LAN or deploying on your own server
 
 ---
 
-## 🧠 Learning Goals
+## 💻 Local Development
 
-- Understand Node.js core modules
-- Master CLI design with `process.argv`
-- Practice filesystem operations and HTTP server
-- Learn inter-process communication and proxying
-- Build offline tools with real-world value
-
----
-
-## 👨‍💻 Author
-
-Created by Henry orji as a Node.js Mastery Project.
+```bash
+yarn install
+yarn dev:server   # Run Server in dev mode
+yarn dev:blogforge    # Run CLI in dev mode
+yarn build       # Build CLI and server
+```
 
 ---
 
 ## 📄 License
 
-MIT
+MIT © [Henry Orji](https://github.com/henrygad)
+
+---
+
+## 🔗 Links
+
+- 🔸 [GitHub Repository](https://github.com/henrygad/BlogForge)
+- 🔸 [npm Package](https://www.npmjs.com/package/@henry0rji/blogforge)

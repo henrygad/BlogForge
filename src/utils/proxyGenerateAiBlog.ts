@@ -1,7 +1,7 @@
 import https from "https";
 
 
-const proxyGenerateAiBlog = ({ topic }: { topic: string }, cb: (data: string) => void) => {
+const proxyGenerateAiBlog = ({ topic }: { topic: string }, cb: (res: string) => void) => {
 
     const prompt = `Write a blog post with title, intro and body about: ${topic}`;
 
@@ -18,7 +18,7 @@ const proxyGenerateAiBlog = ({ topic }: { topic: string }, cb: (data: string) =>
         path: "/api/v1/chat/completions",
         method: "POST",
         headers: {
-            Authorization: "Bearer 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",
+            Authorization: "Bearer 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",
             "Content-Type": "application/json",
             "Content-Length": payload.length,
         },
@@ -28,7 +28,7 @@ const proxyGenerateAiBlog = ({ topic }: { topic: string }, cb: (data: string) =>
     const httpsReq = https.request(options, (response) => {
         response.on("data", (chunk) => (responseBody += chunk));
 
-        response.on("end", () => {
+        response.on("end", () => {           
             cb(responseBody);
         });
     });
