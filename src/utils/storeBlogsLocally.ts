@@ -82,8 +82,7 @@ const createBlogFolder = ({
            // Slug is already formatted
         } else {
             // If slug is not formatted, format it to lowercase and replace spaces with dashes
-            slug = slug.toLowerCase().replace(/\s+/g, "-");
-            console.log(`Formatted slug: ${slug}`);
+            slug = slug.toLowerCase().replace(/\s+/g, "-");            
         }
     }
     // If slug do not exist

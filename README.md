@@ -17,11 +17,10 @@ This repository contains two tools:
 - Saves blogs to the user's `Downloads/BlogForge/` folder
 - Offers helpful commands like `os`, `ai`, `create`, and `list`
 - Designed for offline, local-first content generation
-- only need internet connention for generating ai blog
 
 ### 2. 🌐 `server.ts` — Local Preview Server (Not on npm)
 
-- Serves generated blog posts as json 
+- Serves generated blog posts as json
 - Useful for local development or deploying a static blog viewer
 - Optional component you can run or host separately
 - Available on `githum`
@@ -33,18 +32,63 @@ This repository contains two tools:
 Install BlogForge CLI globally:
 
 ```bash
-npm install -g blogforge      
-yarn add -D blogforge
+
+npm install -g @henry0rji/blogforge
+
+yarn add -D @henry0rji/blogforge
+
 ```
+
+---
+
+## 🔐 Configure OpenRouter AI Key
+
+To use the AI features in **BlogForge**, you need an API key from [OpenRouter](https://openrouter.ai/) and internet connention for generating ai blog.
+
+---
+
+### ✅ Step 1: Get Your OpenRouter API Key
+
+1. Go to [https://openrouter.ai/keys](https://openrouter.ai/keys)
+2. Log in or sign up for a free account.
+3. Click on **"Create key"**
+4. Give your key a name (e.g., `blogforge-cli`) and copy the generated key.
+
+---
+
+### 🛠️ Step 2: Provide Your Key via the CLI Prompt
+
+After installing BlogForge globally:
+
+```bash
+
+npm install -g @henry0rji/blogforge
+
+```
+Run any AI-related command:
+
+```bash
+
+blogforge ai
+
+```
+
+On first use, BlogForge will:
+
+- Prompt you to enter your OpenRouter API key
+- Automatically create a config file at: ~/.blogforge/.env
+- Save your key in this file as: OPENROUTER_API_KEY=your_key_here
+- Use this key automatically on future runs
+
+You won’t need to manually set environment variables again. 🎉
 
 ---
 
 ## ⚙️ CLI Usage
 
 ```bash
-blogforge ai "The Rise of AI Writing" "Author" 
+blogforge ai "The Rise of AI Writing" "Author"
 ```
-
 This command generates a new blog post with:
 
 - Clean Markdown (`post.md`)

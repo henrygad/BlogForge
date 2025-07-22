@@ -1,7 +1,7 @@
-// cli to create, read, update, and delete blog offline 
-// using the node.js process argument vector. 
-"#!/usr/bin / env node";
+#!/usr/bin/env node
+
 import extractTitleAndContent from "./utils/extractTitleAndBody";
+import resolveAiSecretKey from "./utils/getAISecretKey";
 import proxyGenerateAiBlog from "./utils/proxyGenerateAiBlog";
 import { deleteBlogsLocally, readBlogsLocally, storeBlogsLocally } from "./utils/storeBlogsLocally";
 import systemInfo from "./utils/systemInfo";
@@ -16,73 +16,60 @@ if (command === "os") {
 }
 // Proxy to generate ai blog
 else if (command === "ai") {
-    const topic = rest[0];
-    const author = rest[1];
-
+    
+    // Create readline interface for user input
     const rl = readLine.createInterface({
         input: process.stdin,
         output: process.stdout
     });
 
-    if (topic && author) {
-        proxyGenerateAiBlog({ topic }, (res) => {
-            const data = JSON.parse(res);
-            const error = data?.error;
+    // Resolve user ai secret key from ~.blogforge/.env
+    resolveAiSecretKey(rl, () => {
+        const topic = rest[0];
+        const author = rest[1];
 
-            if (error) {
-                console.log(" ❌ Failed to generate blog: ", error.message, ", with code: ", error.code);
-                process.exit(1);
-            }
+        if (topic && author) {
+            proxyGenerateAiBlog({ topic }, (res) => {
+                const data = JSON.parse(res);
+                const error = data?.error;
 
-            const blog = data.choices[0].message.content;
-            if (!blog) {
-                console.error("❌ Failed to generate blog. No content received.");
-            }
-            const { title, body } = extractTitleAndContent(data.choices[0].message.content);
-            storeBlogsLocally({ slug: topic, author, title, body, rl });
-        });
-    } else {
-        rl.question("Please enter the topic: ", (topic) => {
-            rl.question("Please enter the author name: ", (author) => {
-                proxyGenerateAiBlog({ topic }, (res) => {
-                    const data = JSON.parse(res);
-                    const error = data?.error;
+                if (error) {
+                    console.log(" ❌ Failed to generate blog: ", error.message, ", with code: ", error.code);
+                    process.exit(1);
+                }
 
-                    if (error) {
-                        console.log(" ❌ Failed to generate blog: ", error.message, ", with code: ", error.code);
-                        process.exit(1);
-                    }
-
-                    const blog = data.choices[0].message.content;
-                    if (!blog) {
-                        console.error("❌ Failed to generate blog. No content received.");
-                    }
-                    const { title, body } = extractTitleAndContent(data.choices[0].message.content);
-                    storeBlogsLocally({ slug: topic, author, title, body, rl });
-                });
-
+                const blog = data.choices[0].message.content;
+                if (!blog) {
+                    console.error("❌ Failed to generate blog. No content received.");
+                }
+                const { title, body } = extractTitleAndContent(data.choices[0].message.content);
+                storeBlogsLocally({ slug: topic, author, title, body, rl });
             });
-        });
-    }
+        } else {
+            rl.question("Please enter the topic: ", (topic) => {
+                rl.question("Please enter the author name: ", (author) => {
+                    proxyGenerateAiBlog({ topic }, (res) => {
+                        const data = JSON.parse(res);
+                        const error = data?.error;
 
-    proxyGenerateAiBlog({ topic }, (res) => {
-        const data = JSON.parse(res);
-        const error = data?.error;
+                        if (error) {
+                            console.log(" ❌ Failed to generate blog: ", error.message, ", with code: ", error.code);
+                            process.exit(1);
+                        }
 
-        if (error) {
-            console.log(" ❌ Failed to generate blog: ", error.message, ", with code: ", error.code);
-            process.exit(1);
-        }
+                        const blog = data.choices[0].message.content;
+                        if (!blog) {
+                            console.error("❌ Failed to generate blog. No content received.");
+                        }
+                        const { title, body } = extractTitleAndContent(data.choices[0].message.content);
+                        storeBlogsLocally({ slug: topic, author, title, body, rl });
+                    });
 
-
-        const blog = data.choices[0].message.content;
-        if (!blog) {
-            console.error("❌ Failed to generate blog. No content received.");
-        }
-        const { title, body } = extractTitleAndContent(data.choices[0].message.content);
-        storeBlogsLocally({ slug: topic, author, title, body, rl });
-
+                });
+            });
+        }  
     });
+
 
 }
 // Command to  manual create new blog

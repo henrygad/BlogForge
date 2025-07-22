@@ -1,7 +1,9 @@
 import https from "https";
 
-
+// This function generates a blog post using the Mistral AI model via OpenRouter API
+// It takes a topic as input and returns the generated blog content through a callback function
 const proxyGenerateAiBlog = ({ topic }: { topic: string }, cb: (res: string) => void) => {
+    const key = process.env.OPENROUTER_API_KEY;
 
     const prompt = `Write a blog post with title, intro and body about: ${topic}`;
 
@@ -18,13 +20,20 @@ const proxyGenerateAiBlog = ({ topic }: { topic: string }, cb: (res: string) => 
         path: "/api/v1/chat/completions",
         method: "POST",
         headers: {
-            Authorization: "Bearer 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",
+            Authorization: `Bearer ${key}`,
             "Content-Type": "application/json",
             "Content-Length": payload.length,
         },
     };
-
+    
+    // Console loading
+    console.log("Generating blog...");
+   
+    // Initialize an empty string to hold the response body
     let responseBody = "";
+
+    // Create the HTTPS request
+    // and set up event listeners for data and end events   
     const httpsReq = https.request(options, (response) => {
         response.on("data", (chunk) => (responseBody += chunk));
 
@@ -33,11 +42,15 @@ const proxyGenerateAiBlog = ({ topic }: { topic: string }, cb: (res: string) => 
         });
     });
 
+    // Handle any errors that occur during the request
     httpsReq.on("error", (err) => {
         throw new Error(`❌ Faild to to generate blog. error: ${err.message}`);
     });
 
+    // Write the payload to the request body and end the request
     httpsReq.write(payload);
+
+    // End the request to signal that no more data will be sent
     httpsReq.end();
 };
 
