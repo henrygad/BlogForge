@@ -5,6 +5,8 @@ import { createBlog, proxyToGenerateAiBlog, readBlog, streamChangesMadeOnBlogs }
 const blogRoutes = (req: http.IncomingMessage,
     res: http.ServerResponse<http.IncomingMessage>) => {
     
+    // If the request is for the ai blog generation
+    // then proxy the request to the ai blog generation function
     if (req.url === "/api/blog/ai" &&
         req.method === "POST"
     ) {
@@ -13,6 +15,8 @@ const blogRoutes = (req: http.IncomingMessage,
         return;
     }
 
+    // If the request is for the event stream of blogs
+    // then stream the changes made on blogs
     if (req.url === "/api/blog/event" &&
         req.method === "GET"
     ) {
@@ -20,6 +24,8 @@ const blogRoutes = (req: http.IncomingMessage,
         return;
     }
 
+    // If the request is for creating a blog
+    // then call the createBlog function
     if (req.method === "POST") {
         createBlog(req, res);
     }
@@ -31,6 +37,7 @@ const blogRoutes = (req: http.IncomingMessage,
     }
     else if (req.method === "DELETE") {         
     }
+    // If the request is not for any of the above route
     else {
         res.writeHead(404);
         res.end(JSON.stringify({ error: "This blog route is not found" }));

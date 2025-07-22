@@ -6,6 +6,7 @@ import diffBlogs from "./diffData";
 
 const filePath = path.join(__dirname, "../../public/data/posts/posts.json");
 
+// This function streams changes made to the posts.json file
 const streamChangesMadeOnFile = () => {
     if (!fs.existsSync(filePath)) {
         console.error("❌ File path not found: " + filePath);

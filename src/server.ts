@@ -6,9 +6,11 @@ import fs from "fs";
 import path from "path";
 import { blogs } from "./types/post.types";
 
-
+// Set the port for the server
+// You can change this to any port you want
 const PORT = 3000;
 
+// Create the server
 const server = http.createServer((req: http.IncomingMessage,
     res: http.ServerResponse<http.IncomingMessage>) => {
 
@@ -60,8 +62,16 @@ const server = http.createServer((req: http.IncomingMessage,
     }
 });
 
+// Get the local IP address
+// This will be used to host the server on the local network
 const LAN_IP = getLocalIP();
 
+// If the LAN IP is not found, fallback to localhost
+if (!LAN_IP) {
+    console.warn("Local IP not found, falling back to localhost");
+}
+// Start the server and listen on the specified port and LAN IP
+// This will allow the server to be accessible on the local network
 server.listen(PORT, LAN_IP, () => {
     console.log(`🚀 Server running at http://${LAN_IP}:${PORT}/`);
 });

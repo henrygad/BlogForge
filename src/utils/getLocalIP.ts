@@ -1,5 +1,6 @@
 import os from "os";
 
+// This function retrieves the local IP address of the machine.
 const getLocalIP = () => {
     const interfaces = os.networkInterfaces();
     const localIP = Object.values(interfaces)

@@ -7,6 +7,8 @@ type changesProps = {
     deleted: blogs;
 }
 
+// Function to compare two sets of blogs and return the changes
+// It returns an object with three properties: added, updated, and deleted
 const diffBlogs = (oldPosts: blogs, newPosts: blogs) => {
 
     const changes: changesProps = {

@@ -1,5 +1,6 @@
 import os from "os";
 
+// This function retrieves system information such as hostname, username, OS version, etc.
 const systemInfo = () => {
     console.log("📟 System Info:");
     console.log("--------------------------");

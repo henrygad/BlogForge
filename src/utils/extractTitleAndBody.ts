@@ -1,4 +1,6 @@
 
+// This function extracts the title and body from a blog text.
+// It assumes the title is on the first line, prefixed by "Title: ".
 const extractTitleAndContent = (
   blogText: string
 ): { title: string; body: string } => {
